@@ -1,0 +1,52 @@
+<html>
+<head>
+    <style>
+        .image{
+			display:inline-block;
+			width:100px;
+			height:100px;
+			background-repeat:no-repeat;
+			background-position:center;
+			background-size: contain;
+		}
+    </style>
+    <script>
+        var lista=[
+		];
+		function get(){
+			fetch('https://restaurant-menu-v1.firebaseio.com/menu.json')
+			  .then(response => response.json())
+			  .then(data => {
+					lista=data;
+					draw();
+			  })
+		}
+		
+		function draw(){
+			var str = "";
+			for(let i in lista){
+				str+=`
+					<tr>
+						<td>
+							<div class="image" style="background-image:url(${lista[i].imagine})"></div>
+						</td>
+						<td>
+							<div style="font-weight:bold;">${lista[i].nume}</div>
+							<div>${lista[i].ingrediente}</div>
+						</td>
+						<td>
+							<a href="detalii.html?preparat=${i}"><button>Detalii</button></a>
+						</td>
+					</tr>
+				`
+			}
+			document.querySelector("table").innerHTML=str;
+		}
+    </script>
+</head>
+<body onload="get()">
+	<table style="width:100%;">
+
+	</table>
+</body>
+</html>
